@@ -1,9 +1,14 @@
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity, FlatList, ScrollView } from "react-native";
 
-import PrimeVideoLogo from "../../assets/prime_video.png";
-import AmazonLogo from "../../assets/amazon_logo.png";
+import AmazonPrimeLogo from "../../assets/amazon_prime_logo.webp";
 
-import MovieTheShi from "../../assets/movies/the_shining.jpg";
+import MovieDexter from "../../assets/movies/dexter.jpg";
+
+import { MovieCard } from "../../components/MovieCard";
+import { LangCard } from "../../components/LangCard";
+import { MOVIESWATCHING } from "../../utils/moviesWatching";
+import { MOVIESHORROR } from "../../utils/moviesHorror";
+import { MOVIESWATCH } from "../../utils/moviesWatch";
 
 export const Home = () => {
     return (
@@ -11,8 +16,7 @@ export const Home = () => {
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <Image style={styles.primeLogoImg} source={PrimeVideoLogo} />
-                <Image style={styles.amazonLogoImg} source={AmazonLogo} />
+                <Image style={styles.amazonPrimeLogoImg} source={AmazonPrimeLogo} />
             </View>
 
             <View style={styles.category}>
@@ -30,10 +34,45 @@ export const Home = () => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.movieThumbnail}>
-                <Image source={MovieTheShi} style={styles.movieImage} />
-            </TouchableOpacity>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
+                <TouchableOpacity style={styles.movieThumbnail}>
+                    <Image source={MovieDexter} style={styles.movieImage} />
+                </TouchableOpacity>
 
+                <Text style={styles.movieText}>Continue Watching</Text>
+
+                <FlatList 
+                    data={MOVIESWATCHING}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => <MovieCard movieURL={item.moviesURL} />}
+                    horizontal
+                    contentContainerStyle={styles.watchingmovies}
+                    showsHorizontalScrollIndicator={false}
+                    />
+
+                <Text style={styles.movieText}>Horror Movies</Text>
+
+                <FlatList 
+                    data={MOVIESHORROR}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => <MovieCard movieURL={item.moviesURL} />}
+                    horizontal
+                    contentContainerStyle={styles.horrormovies}
+                    showsHorizontalScrollIndicator={false}
+                    />
+
+                <Text style={styles.movieText}>Watch in you Language</Text>
+
+                <FlatList 
+                    data={MOVIESWATCH}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => <LangCard langURL={item.langURL} />}
+                    horizontal
+                    contentContainerStyle={styles.language}
+                    showsHorizontalScrollIndicator={false}
+                    />
+
+            </ScrollView>   
         </View>
     );
 };
@@ -41,7 +80,7 @@ export const Home = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#232F3E",
+        backgroundColor: "#1C242E",
         alignItems: "flex-start",
     },
     header: {
@@ -50,16 +89,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingTop: 80,
     },
-    amazonLogoImg: {
-        marginTop: -32,
-        marginLeft: 30,
+    amazonPrimeLogoImg: {
+        width: 250,
+        height: 45,
+        marginBottom: 15,
     },
     category: {
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-evenly",
         marginTop: 30,
-        marginBottom: 15,
+        marginBottom: 20,
     },
     categoryText: {
         fontSize: 14,
@@ -73,5 +113,28 @@ const styles = StyleSheet.create({
     movieImage: {
         width: "100%",
         height: 200,
+    },
+    movieText: {
+        padding: 20,
+        fontSize: 18,
+        fontWeight: "700",
+        color: "#fff"
+    },
+    scroll: {
+        width: "100%"
+    },
+    watchingmovies: {
+        flex: 1,
+        justifyContent: "center",
+        gap: 15,
+    },
+    horrormovies: {
+        gap: 15,
+        marginLeft: 20,
+    },
+    language: {
+        height: 200,
+        gap: 15,
+        marginLeft: 20,
     },
 });

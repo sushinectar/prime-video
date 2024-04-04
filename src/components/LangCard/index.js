@@ -1,18 +1,16 @@
 import { StyleSheet, TouchableOpacity, Image } from "react-native";
 
 
-export const MovieCard = (props) => {
+export const LangCard = (props) => {
     return (
         <TouchableOpacity>
-            <Image source={props.movieURL} style={styles.img} />
+            <Image source={props.langURL} style={styles.langImg} />
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    img: {
-        width: 177,
-        height: 120,
+    langImg: {
         borderRadius: 10,
     },
 });
